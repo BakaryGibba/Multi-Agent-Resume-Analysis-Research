@@ -1,0 +1,254 @@
+{
+  "name": "Multi-Agent AI Resume Screening System (Groq)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5380c562-42d5-4177-8688-869bb51004c4",
+      "name": "When clicking 'Test workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "resume_text",
+              "value": "Machine Learning Engineer with 5 years of experience building NLP systems, deploying ML APIs using Flask and AWS, and developing recommendation engines using TensorFlow and XGBoost."
+            },
+            {
+              "name": "job_description",
+              "value": "Hiring ML Engineer with experience in Python, NLP, XGBoost, cloud deployment, API development, and scalable ML systems."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e8492088-c428-476c-a120-ebe4ca3a2ad6",
+      "name": "Inject Test Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer: API Key "
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama-3.1-8b-instant\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a strict JSON API. Return ONLY valid raw JSON. Do not use markdown, code blocks, explanations, comments, or additional text.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Extract structured resume metrics from the following resume and job description.\\n\\nResume:\\n{{$json.resume_text}}\\n\\nJob Description:\\n{{$json.job_description}}\\n\\nReturn ONLY this JSON structure:\\n{\\n  \\\"skills_match_score\\\": 0,\\n  \\\"project_count\\\": 0,\\n  \\\"github_activity\\\": 0,\\n  \\\"years_experience\\\": 0,\\n  \\\"resume_length\\\": 0\\n}\"\n    }\n  ],\n  \"temperature\": 0,\n  \"response_format\": {\n    \"type\": \"json_object\"\n  }\n}",
+        "options": {}
+      },
+      "id": "12765cef-6f82-446a-a995-edc4fabe6c7e",
+      "name": "Agent 1: Groq Parser",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2736,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const raw = $json.choices[0].message.content;\n\nreturn [\n  {\n    json: JSON.parse(raw)\n  }\n];"
+      },
+      "id": "7b116a0f-15ab-4259-9065-e948d80723a9",
+      "name": "Parse JSON Output",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2992,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:5000/predict",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json}}",
+        "options": {}
+      },
+      "id": "2ac92fa4-8ba8-490d-a54a-a630817e86ef",
+      "name": "Agent 2: XGBoost Predictor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        3248,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer API Key"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama-3.1-8b-instant\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are an HR explanation agent. Return exactly 3 concise analytical sentences. No markdown.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ (\"The candidate received a match probability of \" + $node[\"Agent 2: XGBoost Predictor\"].json[\"match_probability\"] + \"%. Candidate features: \" + JSON.stringify($node[\"Agent 2: XGBoost Predictor\"].json[\"features_used\"]) + \". Explain why this score was given focusing on strengths and weaknesses.\").toJsonString() }}\n    }\n  ],\n  \"temperature\": 0.3\n}",
+        "options": {}
+      },
+      "id": "5b879e23-8679-4b86-965c-0b6166ec156b",
+      "name": "Agent 3: Groq Explainer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        3520,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "final_match_probability",
+              "value": "={{$node[\"Agent 2: XGBoost Predictor\"].json.match_probability}}"
+            },
+            {
+              "name": "explainability_report",
+              "value": "={{$json.choices[0].message.content}}"
+            },
+            {
+              "name": "shortlisted_prediction",
+              "value": "={{$node[\"Agent 2: XGBoost Predictor\"].json.shortlisted_prediction}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dc3a194e-79c9-45ff-85ba-14a5af6300c6",
+      "name": "Final Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        3776,
+        -288
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking 'Test workflow'": {
+      "main": [
+        [
+          {
+            "node": "Inject Test Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inject Test Data": {
+      "main": [
+        [
+          {
+            "node": "Agent 1: Groq Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 1: Groq Parser": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON Output": {
+      "main": [
+        [
+          {
+            "node": "Agent 2: XGBoost Predictor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 2: XGBoost Predictor": {
+      "main": [
+        [
+          {
+            "node": "Agent 3: Groq Explainer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 3: Groq Explainer": {
+      "main": [
+        [
+          {
+            "node": "Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a9f6119e-d325-4676-9621-4ed9a1afdd0a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "05c6d6638d0e015dfcb5c2fb31feba99bb0719ff9234800a2fb99ff889344bc2"
+  },
+  "id": "qaQjBrnJt2EHD9nf",
+  "tags": []
+}
