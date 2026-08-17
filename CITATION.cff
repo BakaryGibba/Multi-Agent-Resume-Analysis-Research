@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Please cite this research prototype using the metadata below."
+title: "Multi-Agent Machine Learning Framework for Explainable Resume-Job Matching Using LLM-Based Agents"
+type: software
+authors:
+  - family-names: Gibba
+    given-names: Bakary
+    orcid: "https://orcid.org/0009-0001-3191-3975"
+  - family-names: Hajjaj
+    given-names: Sami Salama Hussen
+    orcid: "https://orcid.org/0000-0002-0436-0391"
+repository-code: "https://github.com/BakaryGibba/Multi-Agent-Resume-Analysis-Research"
+url: "https://github.com/BakaryGibba/Multi-Agent-Resume-Analysis-Research"
+abstract: "A research prototype that separates LLM-based feature extraction, XGBoost prediction, and natural-language explanation within an n8n-orchestrated workflow."
+keywords:
+  - multi-agent systems
+  - explainable artificial intelligence
+  - resume-job matching
+  - machine learning
+  - human-centered AI
+version: 1.0.0
+date-released: 2026-08-17
