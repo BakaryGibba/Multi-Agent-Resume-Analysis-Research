@@ -46,7 +46,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "Bearer: API Key "
+              "value": "={{ 'Bearer ' + $env.GROQ_API_KEY }}"
             },
             {
               "name": "Content-Type",
@@ -56,7 +56,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"llama-3.1-8b-instant\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a strict JSON API. Return ONLY valid raw JSON. Do not use markdown, code blocks, explanations, comments, or additional text.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Extract structured resume metrics from the following resume and job description.\\n\\nResume:\\n{{$json.resume_text}}\\n\\nJob Description:\\n{{$json.job_description}}\\n\\nReturn ONLY this JSON structure:\\n{\\n  \\\"skills_match_score\\\": 0,\\n  \\\"project_count\\\": 0,\\n  \\\"github_activity\\\": 0,\\n  \\\"years_experience\\\": 0,\\n  \\\"resume_length\\\": 0\\n}\"\n    }\n  ],\n  \"temperature\": 0,\n  \"response_format\": {\n    \"type\": \"json_object\"\n  }\n}",
+        "jsonBody": "={\n  \"model\": \"llama-3.1-8b-instant\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a strict JSON API. Return ONLY valid raw JSON. Do not use markdown, code blocks, explanations, comments, or additional text.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Extract structured resume metrics from the following resume and job description.\\n\\nResume:\\n{{$json.resume_text}}\\n\\nJob Description:\\n{{$json.job_description}}\\n\\nReturn ONLY this JSON structure:\\n{\\n  \\\"skills_match_score\\\": 0,\\n  \\\"project_count\\\": 0,\\n  \\\"github_activity\\\": 0,\\n  \\\"years_experience\\\": 0,\\n  \\\"resume_length\\\": 0,\\n  \\\"education_level\\\": \\\"Bachelors | High School | Masters | PhD\\\"\\n}\"\n    }\n  ],\n  \"temperature\": 0,\n  \"response_format\": {\n    \"type\": \"json_object\"\n  }\n}",
         "options": {}
       },
       "id": "12765cef-6f82-446a-a995-edc4fabe6c7e",
@@ -117,7 +117,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "Bearer API Key"
+              "value": "={{ 'Bearer ' + $env.GROQ_API_KEY }}"
             },
             {
               "name": "Content-Type",
