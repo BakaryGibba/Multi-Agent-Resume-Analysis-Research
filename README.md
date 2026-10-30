@@ -4,7 +4,7 @@
 
 **A research prototype combining LLM-based extraction, supervised learning, and human-readable decision support.**
 
-[![Research status](https://img.shields.io/badge/status-accepted%20for%20SITWE%202026-0F766E)](https://www.mmupress.com/sitwe2026/)
+[![Research status](https://img.shields.io/badge/status-presented%20at%20SITWE%202026-0F766E)](https://www.mmupress.com/sitwe2026/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://github.com/BakaryGibba/Multi-Agent-Resume-Analysis-Research/actions/workflows/tests.yml/badge.svg)](https://github.com/BakaryGibba/Multi-Agent-Resume-Analysis-Research/actions/workflows/tests.yml)
 [![Responsible AI](https://img.shields.io/badge/use-research%20only-B45309)](docs/RESPONSIBLE_USE.md)
@@ -18,9 +18,9 @@
 
 ## Publication Status
 
-**Accepted for presentation** at the [3rd International Symposium on Information Technology and Web Engineering (SITWE 2026)](https://www.mmupress.com/sitwe2026/), held virtually on 29-30 September 2026.
+**Accepted and presented** at the [3rd International Symposium on Information Technology and Web Engineering (SITWE 2026)](https://www.mmupress.com/sitwe2026/) on 30 September 2026 (held virtually, 29-30 September).
 
-Acceptance for presentation does not imply final journal publication. The manuscript remains subject to the venue's camera-ready and editorial process.
+Proceedings: *Highlights in Web Engineering III* (MMU Press). Final publication details and a DOI will be added here once they are issued.
 
 ## Research Question
 
@@ -136,5 +136,5 @@ For academic citation, use [`CITATION.cff`](CITATION.cff) or the citation exampl
 ---
 
 <div align="center">
-Research code by <a href="https://github.com/BakaryGibba">Bakary Gibba</a> | Accepted for presentation at SITWE 2026
+Research code by <a href="https://github.com/BakaryGibba">Bakary Gibba</a> | Presented at SITWE 2026
 </div>

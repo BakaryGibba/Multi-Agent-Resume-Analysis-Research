@@ -56,13 +56,13 @@ No API key, account identifier, execution history, or real resume is included in
 
 ## Citation
 
-Until archival proceedings or a journal version is confirmed, cite the work as accepted for presentation:
+Until the proceedings are published with a persistent identifier, cite the work as presented at SITWE 2026:
 
 ```bibtex
 @unpublished{gibba2026multiagent,
   author = {Bakary Gibba and Sami Salama Hussen Hajjaj},
   title = {Multi-Agent Machine Learning Framework for Explainable Resume--Job Matching Using LLM-Based Agents},
-  note = {Accepted for presentation at the 3rd International Symposium on Information Technology and Web Engineering (SITWE 2026)},
+  note = {Presented at the 3rd International Symposium on Information Technology and Web Engineering (SITWE 2026), 30 September 2026. To appear in Highlights in Web Engineering III, MMU Press},
   year = {2026}
 }
 ```
