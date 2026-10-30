@@ -20,3 +20,21 @@ keywords:
   - human-centered AI
 version: 1.0.0
 date-released: 2026-08-17
+preferred-citation:
+  type: conference-paper
+  title: "Multi-Agent Machine Learning Framework for Explainable Resume-Job Matching Using LLM-Based Agents"
+  authors:
+    - family-names: Gibba
+      given-names: Bakary
+      orcid: "https://orcid.org/0009-0001-3191-3975"
+    - family-names: Hajjaj
+      given-names: Sami Salama Hussen
+      orcid: "https://orcid.org/0000-0002-0436-0391"
+  conference:
+    name: "3rd International Symposium on Information Technology and Web Engineering (SITWE 2026)"
+    date-start: 2026-09-29
+    date-end: 2026-09-30
+  collection-title: "Highlights in Web Engineering III"
+  publisher:
+    name: "MMU Press"
+  year: 2026
