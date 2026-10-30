@@ -1,6 +1,6 @@
 # Multi-Agent Machine Learning Framework for Explainable Resume–Job Matching Using LLM-Based Agents
 
-> **Research status:** Accepted for presentation at the 3rd International Symposium on Information Technology and Web Engineering (SITWE 2026). This acceptance does not imply final journal publication. The system is a research prototype and must not be used for autonomous employment decisions.
+> **Research status:** Accepted and presented at the 3rd International Symposium on Information Technology and Web Engineering (SITWE 2026) on 30 September 2026. Proceedings: *Highlights in Web Engineering III* (MMU Press); final publication details are pending. The system is a research prototype and must not be used for autonomous employment decisions.
 
 ## ABSTRACT
 Traditional resume screening processes are time-consuming, scale poorly, and frequently lack transparency. While machine learning (ML) models offer predictive power, they often act as "black boxes," leaving reviewers without a clear account of the inputs behind a score. This research proposes a multi-agent framework combining traditional machine learning classifiers with Large Language Model (LLM) agents orchestrated via n8n. The system parses unstructured text, engineers experimental features, predicts a benchmark suitability label using XGBoost, and generates a natural-language summary for human inspection. The study evaluates the feasibility of this modular architecture; it does not establish production effectiveness or suitability for autonomous hiring.
